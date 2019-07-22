@@ -11,6 +11,8 @@ from os.path import isfile, join
 import filecmp
 import random
 import string
+import h5py
+import numpy as np
 
 
 def write_grade(grade):
@@ -61,15 +63,15 @@ if __name__ == '__main__':
                     break
 
                 ans_file = h5py.File('data/{}.ans.h5'.format(i), 'r')
-                std_data = ans_file["/PMTInfo"][()]
+                ans_data = ans_file["/PMTInfo"][()]
                 out_file = h5py.File(path, 'r')
-                out_data = ans_file["/PMTInfo"][()]
+                out_data = out_file["/PMTInfo"][()]
 
-                if not np.array_equal(std_data, out_data):
+                if np.array_equal(ans_data, out_data) and ans_data.dtype == out_data.dtype:
+                    grade += 8
+                else:
                     if os.isatty(1):
                         print('Data mismatch for path')
-                else:
-                    grade += 10
 
         except Exception:
             if os.isatty(1):
