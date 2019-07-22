@@ -16,9 +16,6 @@ import numpy as np
 
 
 def write_grade(grade):
-    if os.isatty(1):
-        print('Removing all output files')
-        os.system('rm -f data/*.out.h5')
 
     data = {}
     data['grade'] = grade
