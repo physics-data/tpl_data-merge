@@ -71,7 +71,7 @@ if __name__ == '__main__':
                     grade += 8
                 else:
                     if os.isatty(1):
-                        print('Data mismatch for path')
+                        print('Data mismatch for path {}'.format(out_file)
 
         except Exception:
             if os.isatty(1):

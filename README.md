@@ -121,7 +121,7 @@
 
 ### 输出格式
 
-你需要将上面三张表中的内容合并为输出文件中的一张表 `PMTInfo` ，共有 6 列：`EventID`, `ChannelID`, `Sec`, `NanoSec`, `Waveform`, `PETime`，意义与数据类型与上面相同。请注意，每行的五元组 `(EventID, ChannelID, Sec, NanoSec, Waveform)` （即一次事件中一个探测器对应的波形） 可能对应任意多个 `PETime` （即真正的闪烁时间）；这张表中的每一行表征了一次闪烁的所有信息，因此行数以及 `PETime` 一列的内容与顺序应该与 `GroundTruth` 表**完全一致**。
+你需要将上面三张表中的内容合并为输出文件中的一张表 `PMTInfo` ，共有 6 列：`EventID`, `ChannelID`, `Sec`, `NanoSec`, `Waveform`, `PETime`，意义与**数据类型与上面相同**。请注意，每行的五元组 `(EventID, ChannelID, Sec, NanoSec, Waveform)` （即一次事件中一个探测器对应的波形） 可能对应任意多个 `PETime` （即真正的闪烁时间）；这张表中的每一行表征了一次闪烁的所有信息，因此行数以及 `PETime` 一列的内容与顺序应该与 `GroundTruth` 表**完全一致**。
 
 <div markdown="0" align="center">
     <table cellspacing="0" border="0">
