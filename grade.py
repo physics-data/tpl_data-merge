@@ -47,7 +47,7 @@ if __name__ == '__main__':
     start_time = time.time()
 
     while p.poll() is None:
-        if time.time() - start_time > 1:
+        if time.time() - start_time > 5:
             p.kill()
 
     stdout, stderr = p.communicate(timeout=1)
@@ -60,6 +60,17 @@ if __name__ == '__main__':
                         print('File missing: {}'.format(path))
                     break
 
+                ans_file = h5py.File('data/{}.ans.h5'.format(i), 'r')
+                std_data = ans_file["/PMTInfo"][()]
+                out_file = h5py.File(path, 'r')
+                out_data = ans_file["/PMTInfo"][()]
+
+                if not np.array_equal(std_data, out_data):
+                    if os.isatty(1):
+                        print('Data mismatch for path')
+                else:
+                    grade += 10
+
         except Exception:
             if os.isatty(1):
                 print('Unexpected stdout:')
@@ -68,6 +79,8 @@ if __name__ == '__main__':
         print('Your program exited with:')
         sys.stdout.buffer.write(stderr)
 
+    if grade != 80:
+        write_grade(grade)
 
     # Part 2
     if os.isatty(1):
