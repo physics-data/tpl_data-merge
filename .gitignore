@@ -1,4 +1,5 @@
 .vscode/
+*.out.h5
 *.output
 *.pyc
 __pycache__
