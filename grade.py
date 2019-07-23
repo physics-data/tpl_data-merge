@@ -46,8 +46,14 @@ if __name__ == '__main__':
     start_time = time.time()
 
     while p.poll() is None:
-        if time.time() - start_time > 5:
+        if time.time() - start_time > 10:
             p.kill()
+
+    time_used = time.time() - start_time
+    if time_used <= 5:
+        coef = 1
+    else:
+        coef = 1 - (time_used - 5) * 0.04
 
     stdout, stderr = p.communicate(timeout=1)
     if len(stderr) == 0:
@@ -65,7 +71,7 @@ if __name__ == '__main__':
                 out_data = out_file["/PMTInfo"][()]
 
                 if np.array_equal(ans_data, out_data) and ans_data.dtype == out_data.dtype:
-                    grade += 8
+                    grade += 8 * coef
                 else:
                     if os.isatty(1):
                         print('Data mismatch for path {}'.format(out_file))
