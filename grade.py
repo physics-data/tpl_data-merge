@@ -85,8 +85,6 @@ if __name__ == '__main__':
         sys.stdout.buffer.write(stderr)
 
     grade = np.ceil(grade)
-    if grade != 80:
-        write_grade(grade)
 
     # Part 2
     if os.isatty(1):
