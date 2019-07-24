@@ -13,6 +13,7 @@ import random
 import string
 import h5py
 import numpy as np
+import signal
 
 
 def write_grade(grade):
@@ -47,7 +48,7 @@ if __name__ == '__main__':
 
     while p.poll() is None:
         if time.time() - start_time > 10:
-            p.kill()
+            p.send_signal(signal.SIGQUIT)
 
     time_used = time.time() - start_time
     if time_used <= 5:
