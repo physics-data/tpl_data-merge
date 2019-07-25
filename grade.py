@@ -81,7 +81,7 @@ if __name__ == '__main__':
         if os.isatty(1):
             print('Unexpected stdout:')
             sys.stdout.buffer.write(stdout)
-    if os.isatty(1) ans len(stderr) != 0:
+    if os.isatty(1) and len(stderr) != 0:
         print('Your program exited with:')
         sys.stdout.buffer.write(stderr)
 
