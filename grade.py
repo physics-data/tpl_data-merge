@@ -48,6 +48,7 @@ if __name__ == '__main__':
 
     while p.poll() is None:
         if time.time() - start_time > 10:
+            p.kill()
             p.send_signal(signal.SIGQUIT)
 
     time_used = time.time() - start_time
@@ -57,31 +58,30 @@ if __name__ == '__main__':
         coef = 1 - (time_used - 5) * 0.04
 
     stdout, stderr = p.communicate(timeout=1)
-    if len(stderr) == 0:
-        try:
-            for i in range(1, 11):
-                path = 'data/{}.out.h5'.format(i)
-                if not os.path.exists(path):
-                    if os.isatty(1):
-                        print('File missing: {}'.format(path))
-                    break
+    try:
+        for i in range(1, 11):
+            path = 'data/{}.out.h5'.format(i)
+            if not os.path.exists(path):
+                if os.isatty(1):
+                    print('File missing: {}'.format(path))
+                break
 
-                ans_file = h5py.File('data/{}.ans.h5'.format(i), 'r')
-                ans_data = ans_file["/PMTInfo"][()]
-                out_file = h5py.File(path, 'r')
-                out_data = out_file["/PMTInfo"][()]
+            ans_file = h5py.File('data/{}.ans.h5'.format(i), 'r')
+            ans_data = ans_file["/PMTInfo"][()]
+            out_file = h5py.File(path, 'r')
+            out_data = out_file["/PMTInfo"][()]
 
-                if np.array_equal(ans_data, out_data) and ans_data.dtype == out_data.dtype:
-                    grade += 8 * coef
-                else:
-                    if os.isatty(1):
-                        print('Data mismatch for path {}'.format(out_file))
+            if np.array_equal(ans_data, out_data) and ans_data.dtype == out_data.dtype:
+                grade += 8 * coef
+            else:
+                if os.isatty(1):
+                    print('Data mismatch for path {}'.format(out_file))
 
-        except Exception:
-            if os.isatty(1):
-                print('Unexpected stdout:')
-                sys.stdout.buffer.write(stdout)
-    elif os.isatty(1):
+    except Exception:
+        if os.isatty(1):
+            print('Unexpected stdout:')
+            sys.stdout.buffer.write(stdout)
+    if os.isatty(1) ans len(stderr) != 0:
         print('Your program exited with:')
         sys.stdout.buffer.write(stderr)
 
