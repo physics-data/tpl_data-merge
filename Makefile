@@ -8,7 +8,7 @@ OUTPUT := $(patsubst %.in.h5, %.out.h5, $(INPUT))
 all: $(OUTPUT)
 
 %.out.h5: %.in.h5
-	# TODO: how to invoke the python script ?
+	# TODO: how to invoke the R script ?
 
 clean:
 	# TODO: how to remove all outputs?
