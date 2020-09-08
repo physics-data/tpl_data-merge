@@ -11,7 +11,6 @@ from os.path import isfile, join
 import filecmp
 import random
 import string
-import numpy as np
 import signal
 
 
@@ -20,7 +19,7 @@ def write_grade(grade):
     data = {}
     data['grade'] = grade
     if os.isatty(1):
-        print('Grade: {}/90'.format(grade))
+        print('Grade: {}/90'.format(int(grade)))
     else:
         print(json.dumps(data))
 
@@ -76,7 +75,7 @@ if __name__ == '__main__':
         print('Your program exited with:')
         sys.stdout.buffer.write(stderr)
 
-    grade = np.ceil(grade)
+    grade = grade
 
     # Part 2
     if os.isatty(1):
