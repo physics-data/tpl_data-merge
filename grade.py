@@ -11,7 +11,6 @@ from os.path import isfile, join
 import filecmp
 import random
 import string
-import h5py
 import numpy as np
 import signal
 
@@ -36,7 +35,7 @@ if __name__ == '__main__':
 
     if os.isatty(1):
         print('Removing all output files')
-    os.system('rm -f data/*.out.h5')
+    os.system('rm -f data2/*.out.Rdata')
 
     grade = 0
 
@@ -51,28 +50,20 @@ if __name__ == '__main__':
             p.kill()
             p.send_signal(signal.SIGQUIT)
 
-    time_used = time.time() - start_time
-    if time_used <= 5:
-        coef = 1
-    else:
-        coef = 1 - (time_used - 5) * 0.04
-
     stdout, stderr = p.communicate(timeout=1)
     try:
         for i in range(1, 11):
-            path = 'data/{}.out.h5'.format(i)
+            path = 'data2/{}.out.Rdata'.format(i)
+            ans = 'data2/{}.ans.Rdata'.format(i)
             if not os.path.exists(path):
                 if os.isatty(1):
                     print('File missing: {}'.format(path))
                 break
 
-            ans_file = h5py.File('data/{}.ans.h5'.format(i), 'r')
-            ans_data = ans_file["/PMTInfo"][()]
-            out_file = h5py.File(path, 'r')
-            out_data = out_file["/PMTInfo"][()]
-
-            if np.array_equal(ans_data, out_data) and ans_data.dtype == out_data.dtype:
-                grade += 8 * coef
+            ret = subprocess.call(["./grade.R",path,ans], stdout=open(os.devnull,'w'), stderr=open(os.devnull,'w'))
+            
+            if ret == 0:
+                grade += 8
             else:
                 if os.isatty(1):
                     print('Data mismatch for path {}'.format(out_file))
@@ -102,7 +93,7 @@ if __name__ == '__main__':
         try:
             flag = 1
             for i in range(1, 11):
-                path = 'data/{}.out.h5'.format(i)
+                path = 'data2/{}.out.Rdata'.format(i)
                 if os.path.exists(path):
                     flag = 0
                     if os.isatty(1):
