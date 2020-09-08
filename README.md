@@ -15,7 +15,7 @@
 
 ### 输入格式
 
-输入数据为 PMT 题目的训练数据，储存在 Rdata 文件中，其中有<del>三</dev>两个表：`TriggerInfo` 保存触发的时间戳信息；<del>`Waveform` 保存波形信息；</del>`GroundTruth` 保存每个光子的击中时间，即标签信息。每个表都有对应的事例编号或通道编号，如下所示。如果需要了解具体物理背景或者更详细的解释，你可以参照 [tpl_PMT-waveform](https://github.com/physics-data/tpl_PMT-waveform) 仓库的说明。
+输入数据为 PMT 题目的训练数据，储存在 Rdata 文件中，其中有两个表：`TriggerInfo` 保存触发的时间戳信息；`GroundTruth` 保存每个光子的击中时间，即标签信息。每个表都有对应的事例编号或通道编号，如下所示。如果需要了解具体物理背景或者更详细的解释，你可以参照 [tpl_PMT-waveform](https://github.com/physics-data/tpl_PMT-waveform) 仓库的说明。
 
 <div markdown="0" align="center">
     <table cellspacing="0" border="0">
@@ -121,7 +121,7 @@
 
 ### 输出格式
 
-你需要将上面<del>三</del>两张表中的内容合并为输出文件中的一张表 `PMTInfo` ，共有 5 列：`EventID`, `ChannelID`, `Sec`, `NanoSec`, `PETime`。
+你需要将上面两张表中的内容合并为输出文件中的一张表 `PMTInfo` ，共有 5 列：`EventID`, `ChannelID`, `Sec`, `NanoSec`, `PETime`。
 
 <div markdown="0" align="center">
     <table cellspacing="0" border="0">
