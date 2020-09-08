@@ -17,7 +17,7 @@ import signal
 def write_grade(grade):
 
     data = {}
-    data['grade'] = grade
+    data['grade'] = int(grade)
     if os.isatty(1):
         print('Grade: {}/90'.format(int(grade)))
     else:
